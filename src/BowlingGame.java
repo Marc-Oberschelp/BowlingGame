@@ -11,15 +11,14 @@ public class BowlingGame {
         m_g = new Game();
     }
 
-
-
-    private void rollBalls(int rolls, int pinValue)
+    private void RollBalls(int rolls, int pinValue)
     {
         for (int i = 0; i<rolls; ++i)
         {
             m_g.roll(pinValue);
         }
     }
+
     private void RollSpare()
     {
         m_g.roll(6);
@@ -35,14 +34,14 @@ public class BowlingGame {
     @Test
     public void ZeroGame()
     {
-        rollBalls(20, 0);
+        RollBalls(20, 0);
         assertEquals(0, m_g.score());
     }
 
     @Test
     public void AllOnesGame()
     {
-        rollBalls(20, 1);
+        RollBalls(20, 1);
         assertEquals(20, m_g.score());
     }
 
@@ -51,16 +50,24 @@ public class BowlingGame {
     {
         RollSpare();
         RollSimpleFrame();
-        rollBalls(16,0);
+        RollBalls(16,0);
         assertEquals(27, m_g.score());
     }
+
     @Test
     public void ThrowSimpleFrameAfterStrike()
     {
         m_g.roll(10);
         RollSimpleFrame();
-        rollBalls(16,0);
+        RollBalls(16,0);
         assertEquals(28, m_g.score());
+    }
+
+    @Test
+    public void ThrowPerfectGame()
+    {
+        RollBalls(12,10);
+        assertEquals(300, m_g.score());
     }
 
     private Game m_g;

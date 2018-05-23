@@ -2,30 +2,30 @@ class Game
 {
     void roll(int pins)
     {
-        line[currentBall] = pins;
-        ++currentBall;
+        m_line[m_currentBall] = pins;
+        ++m_currentBall;
     }
 
     int score()
     {
         int score = 0;
-        int i = 0;
+        int ball = 0;
         for (int frame = 0; frame < 10; ++frame )
         {
-            if (isStrike(i))
+            if (isStrike(ball))
             {
-                score += 10 + strikeBonus(i);
-                i++;
+                score += 10 + strikeBonus(ball);
+                ball++;
             }
-            if (isSpare(i))
+            else if (isSpare(ball))
             {
-                score += 10 + spareBonus(i);
-                i+=2;
+                score += 10 + spareBonus(ball);
+                ball+=2;
             }
             else
             {
-                score += simpleFrameScore(i);
-                i+=2;
+                score += simpleFrameScore(ball);
+                ball+=2;
             }
 
         }
@@ -34,30 +34,30 @@ class Game
 
     private int simpleFrameScore(int i)
     {
-        return line[i] + line[i+1];
+        return m_line[i] + m_line[i+1];
     }
 
     private int spareBonus(int i)
     {
-        return line[i + 2];
+        return m_line[i + 2];
     }
 
     private int strikeBonus(int i)
     {
-        return line[i + 1] + line[i + 2];
+        return m_line[i + 1] + m_line[i + 2];
     }
 
     private boolean isStrike(int i)
     {
-        return line[i] == 10;
+        return m_line[i] == 10;
     }
 
     private boolean isSpare(int i)
     {
-        return line[i] + line[i+1] == 10;
+        return m_line[i] + m_line[i+1] == 10;
     }
 
-    private int currentBall = 0;
-    private int line[] = new int[21]; /* 21: Maximum number of throws */
+    private int m_currentBall = 0;
+    private int m_line[] = new int[21]; /* 21: Maximum number of throws */
 
 }
