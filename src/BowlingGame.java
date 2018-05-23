@@ -11,12 +11,7 @@ public class BowlingGame {
         m_g = new Game();
     }
 
-    @Test
-    public void ZeroGame()
-    {
-        rollBalls(20, 0);
-        assertEquals(0, m_g.score());
-    }
+
 
     private void rollBalls(int rolls, int pinValue)
     {
@@ -24,6 +19,24 @@ public class BowlingGame {
         {
             m_g.roll(pinValue);
         }
+    }
+    private void RollSpare()
+    {
+        m_g.roll(6);
+        m_g.roll(4);
+    }
+
+    private void RollSimpleFrame()
+    {
+        m_g.roll(8);
+        m_g.roll(1);
+    }
+
+    @Test
+    public void ZeroGame()
+    {
+        rollBalls(20, 0);
+        assertEquals(0, m_g.score());
     }
 
     @Test
@@ -36,12 +49,18 @@ public class BowlingGame {
     @Test
     public void ThrowSimpleFrameAfterSpare()
     {
-        m_g.roll(6);
-        m_g.roll(4);
-        m_g.roll(8);
-        m_g.roll(1);
+        RollSpare();
+        RollSimpleFrame();
         rollBalls(16,0);
         assertEquals(27, m_g.score());
+    }
+    @Test
+    public void ThrowSimpleFrameAfterStrike()
+    {
+        m_g.roll(10);
+        RollSimpleFrame();
+        rollBalls(16,0);
+        assertEquals(28, m_g.score());
     }
 
     private Game m_g;

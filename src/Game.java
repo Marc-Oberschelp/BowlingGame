@@ -12,18 +12,44 @@ class Game
         int i = 0;
         for (int frame = 0; frame < 10; ++frame )
         {
+            if (isStrike(i))
+            {
+                score += 10 + strikeBonus(i);
+                i++;
+            }
             if (isSpare(i))
             {
-                score += 10 + line[i+2];
+                score += 10 + spareBonus(i);
+                i+=2;
             }
             else
             {
-                score += line[i] + line[i+1];
-
+                score += simpleFrameScore(i);
+                i+=2;
             }
-            i+=2;
+
         }
         return score;
+    }
+
+    private int simpleFrameScore(int i)
+    {
+        return line[i] + line[i+1];
+    }
+
+    private int spareBonus(int i)
+    {
+        return line[i + 2];
+    }
+
+    private int strikeBonus(int i)
+    {
+        return line[i + 1] + line[i + 2];
+    }
+
+    private boolean isStrike(int i)
+    {
+        return line[i] == 10;
     }
 
     private boolean isSpare(int i)
